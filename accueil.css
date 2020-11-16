@@ -1,0 +1,295 @@
+html{
+  margin:0;
+  padding:0;
+  background:#f0e8e5;
+  overflow-x: hidden;
+}
+
+			/*Header*/
+
+.dropdownmenu {
+    background-color: #CEB4A9;
+    display: flex;
+    justify-content: space-between;
+}
+/* Suppression des puces et des marges pour les listes du menu et des sous-menus */ 
+.dropdownmenu,
+.dropdownmenu ul {
+    list-style-type: none; 
+    margin: 0px; 
+    padding: 0px;
+} 
+.dropdownmenu ul { /* Masquage des sous-menu par defaut */
+    display: none;
+}
+.dropdownmenu li {
+    /* Disposition horizontale des elements de menu */
+    display: inline-block;
+    /* Positionnement relative des elements de menu pour pouvoir    positionner les sous-menu correctement en absolu */
+    position: relative;
+}
+.dropdownmenu a {
+    /* On transforme les liens en bloc pour pouvoir les dimensionner */
+    display: block;
+    width: 100px; 
+    height: 30px; 
+    line-height: 30px; 
+    padding: 3px 10px;
+    text-align: center;
+}
+.dropdownmenu li:hover ul {
+    /* Affichage du soumenu au survol */
+    display: block;
+    /* Positionnement du sous-menu */ 
+    position: absolute; 
+    top: 36px; /* Hauteur du menu + hauteur du padding top et bottom : 30 + 3 + 3 = 36 */ 
+    left: 0px; /* Decalage du sous-menu par rapport aux liens du menu*/ 
+    z-index: 100; /* Gestion de la superposition des sous-menus par rapport au reste de la page */ 
+}
+.dropdownmenu ul a { 
+    /* Changement de l'affichage des liens des    sous-menus pour ne pas les afficher en inline-block comme les liens de menu, ils seront donc verticaux */
+    display: block;
+
+}
+
+			/* Gestion des couleurs */
+.dropdownmenu li { 
+    background-color: #CEB4A9; /* Couleur d'arriere-plan du menu */
+}
+.dropdownmenu li a { 
+    color: #996a57; /* Couleur du texte du menu */ 
+}
+.dropdownmenu li:hover {
+    background-color: #CEB4A9; /* Couleur d'arriere-plan du menu au survol */
+}
+.dropdownmenu li:hover a {
+    color: #996a57; /* Couleur du texte du menu au survol */ 
+}
+.dropdownmenu ul li { 
+    background-color: #CEB4A9; /* Couleur d'arriere-plan des sous-menu */ 
+}
+.dropdownmenu ul li:hover {
+    background-color:#996a57; /* Couleur d'arriere-plan des sous-menu au survol */ 
+}
+.dropdownmenu ul li a {
+    color: #996a57; /* Couleur du texte des sous-menu */ 
+}
+.dropdownmenu ul li:hover a {
+    color: #CEB4A9; /* Couleur du texte des sous-menu au survol */
+}
+
+
+
+            /*presentation*/
+
+.presentation{
+	margin-top: 50px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.logo{
+	width: 40%;
+}
+
+.article{
+	align-items: center;
+	
+	width: 40%;
+	height: 60%;	
+	border-radius: 20px;
+	
+	color: #996a57;
+	box-shadow: 0 0 20em  #CEB4A9;
+	padding: 10px;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+.img1{
+	align-items: center;
+	display: flex;
+	justify-content: space-around;
+}
+
+.img1 p{
+	color: #996a57;
+
+}
+
+
+.img_hotel{
+	width: 50%;
+	border-radius: 15px;
+	border: 2px solid #996a57;
+	box-shadow: 3px 1.5px 1.5px #996a57;
+}
+
+
+/*image de présentation des lieux*/
+
+.slide{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+#slider { width: 80%; max-width: 540px; 
+}
+
+
+#slider figure {
+  position: relative; 
+  width: 900%;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  text-align: left;
+  animation: 25s slidy infinite;
+
+}
+
+.images{
+	margin: 20px;
+	width: 500px;
+	height: 250px;
+
+}
+
+.images:hover{
+	filter: grayscale(1);
+}
+
+
+
+
+@keyframes slidy {
+  0% { left: 0%; }
+  10% { left: 0%; }
+  15% { left: -100%; }
+  25% { left: -100%; }
+  30% { left: -200%; }
+  40% { left: -200%; }
+  45% { left: -300%; }
+  55% { left: -300%; }
+  60% { left: -400%; }
+  70% { left: -400%; }
+  75% { left: -500%; }
+  85% { left: -500%; }
+  90% { left: -600%; }
+  95% { left: -600%; }
+}
+
+.containeur-hotel{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	
+	margin-bottom: 50px;
+}
+
+
+.text-hotel{
+	width: 400px;
+	border: 1px solid #CEB4A9;
+	box-shadow: 0 0 20em  #CEB4A9;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.image-hotel-text{
+	display: flex;
+	flex-direction: column;
+	vertical-align: middle;
+}
+
+.img-hotel-text1{
+	width: 600px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+
+	box-shadow: 0 0 20em  #CEB4A9;
+}
+
+.img-hotel-text2{
+	margin-top: 50px;
+	box-shadow: 0 0 20em  #CEB4A9;
+	width: 600px;
+	margin-bottom: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	
+}
+
+button{
+	color: transparent;
+	border: transparent;
+	background-color: transparent;
+	margin-top: 20px;
+}
+
+button a{
+	font-family: 'Yellowtail', cursive;
+	border-radius: 15px;
+	font-size: 50px;
+
+	background:#f0e8e5;
+	padding: 15px;
+	text-decoration: none;
+	color: #996a57;
+	box-shadow: 0 0 20em #f0e8e5;
+}
+
+button a:hover{
+	background:#996a57;
+	color: #f0e8e5;
+	box-shadow: 0 0 20em  #CEB4A9;
+	transition-duration: 1s;
+
+}
+
+h2{
+	font-family: 'Yellowtail', cursive;
+	font-size: 30px;
+	color: #996a57;
+}
+p{
+	color: #b38a79;
+}
+
+h3{
+	font-family: 'Yellowtail', cursive;
+		font-size: 30px;
+	color: #996a57;
+}
+
+/*Inscription*/
+
+
+.ins input{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.ins button{
+	color: #996a57;
+	margin-bottom: 5px;
+}
+.ins label{
+	color: #996a57;
+}
+
+.inscrip{
+	
+	display: flex;
+	justify-content: space-around;
+
+}
+.ins{
+	background:#f0e8e5;
+	border:1px solid #996a57;
+	text-align: center;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	box-shadow: 0 0 20em  #CEB4A9;
+	width: 500px;
+}
