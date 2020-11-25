@@ -241,6 +241,7 @@ button a{
 }
 
 button a:hover{
+	
 	background:#996a57;
 	color: #f0e8e5;
 	box-shadow: 0 0 20em  #CEB4A9;

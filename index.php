@@ -1,6 +1,9 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+	<meta charset="utf-8">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="accueil.css">
@@ -15,7 +18,7 @@
 					<a href="index.php">Acceuil</a>	
 				</li>
 				<li>
-					<a href="#">Utilisateur</a>
+					<a href="#">Utilisateurs</a>
                 	<ul>
                     	<li><a href="inscription.php">inscription</a></li>
                     	<li><a href="connexion.php">connexion</a></li>
