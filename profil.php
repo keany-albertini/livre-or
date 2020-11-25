@@ -48,17 +48,17 @@ $user = mysqli_fetch_assoc($query); //Took 1line from the Db
 
         <?php echo'Bonjour ' .$user['login'];?>
 
-        <div class="formulaireprofil">
-            <h1 class="h1profil">Profil</h1>
-            <form action="profil.php" method="POST">
+        <div class="inscrip">
+            
+            <form class="ins" action="profil.php" method="POST">
                 <label>Identifiants</label><br/>
                 <input class="login" type="text" name='login' placeholder="<?php echo $user['login']; ?>" required><br/>
                 <label>Mot de passe</label><br/>
                 <input class="password" type="password" name='password' placeholder="<?php echo $user['password']; ?>" required><br/>
                 <label>Confirmez la modification</label><br/>
                 <input class="password" type="password" name='confpass' placeholder="<?php echo $user['password']; ?>"required ><br/>
-                <input class="submit" type="submit" name="modifier" value="Modifier" onclick="alert('Informations modifiés')">
-                <input class="submit" type="submit" name='deco' value="Déconnexion" onclick="alert('Vous êtes déconnecté')">
+                <input class="submit" type="submit" name="confirmer" value="Modifier">
+                
 
             </form>
         </div>
@@ -71,7 +71,7 @@ $user = mysqli_fetch_assoc($query); //Took 1line from the Db
 
 <?php
 
-if(isset($_POST["modifier"])){
+if(isset($_POST["confirmer"])){
 $login = $_POST['login'];
 $password = $_POST['password'];
 

@@ -74,19 +74,19 @@ if (isset($_POST['go']) && $_POST['go']=='Signer')
     </header>
 
 
-   <form action="livre-or.php" method="post">
+   <form class="ins" action="livre-or.php" method="post">
 
 
+    <label id="login">identifiant</label><br>
+
+<input type="text" name="id_utilisateur" maxlength="30" size="50" value="<?php if (isset($_POST['id_utilisateur'])) echo htmlentities(trim($_POST['id_utilisateur'])); ?>"><br>
 
 
-<input type="text" name="id_utilisateur" maxlength="30" size="50" value="<?php if (isset($_POST['id_utilisateur'])) echo htmlentities(trim($_POST['id_utilisateur'])); ?>">
-</td></tr><tr><td>
-[b]Votre message :[/b]
-</td><td>
-<textarea name="message" cols="50" rows="10"><?php if (isset($_POST['message'])) echo htmlentities(trim($_POST['message'])); ?></textarea>
-</td></tr><tr><td><td align="right">
+<label id="com">Votre commentaire</label><br>
+<textarea name="message" cols="50" rows="10"><?php if (isset($_POST['message'])) echo htmlentities(trim($_POST['message'])); ?></textarea><br>
+
 <input type="submit" name="go" value="Signer">
-</td></tr></table>
+
 </form>
 <?php
 if (isset($erreur)) echo '<br /><br />',$erreur;
