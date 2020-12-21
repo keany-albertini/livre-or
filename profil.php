@@ -1,13 +1,69 @@
 <?php
+
 session_start();
+if (isset($_SESSION['login'])) { } else {
+    header('Location:index.php');
+}
+$connexion = mysqli_connect('localhost', 'root', '', 'livreor');
 
-$db = mysqli_connect("localhost", "root", "root", "livreor"); // Connect to Db
-$requete = "SELECT * FROM utilisateurs WHERE id = '" . $_SESSION['id'] . "'"; // SQL query
-$query = mysqli_query($db, $requete); // Execut the query
-$user = mysqli_fetch_assoc($query); //Took 1line from the Db
+
+$requete = "SELECT * FROM utilisateurs WHERE login = '" . $_SESSION['login'] . "'";
+$query = mysqli_query($connexion, $requete);
+$resultat = mysqli_fetch_assoc($query);
+
+if (isset($_POST['Modifier'])) {
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+    $password_conf = $_POST['password_conf'];
+    $old_password = $_POST['old_password'];
+    $modif_log = false;
+    $modif_password = false;
+    $erreur_log = false;
+    $erreur_password = false;
+    $erreur_oldpassword = false;
+
+    if (password_verify($_POST['old_password'], $resultat['password'])) {
+        if ($login != $resultat['login']) {
+            $requete_verif = "SELECT login FROM utilisateurs WHERE login = '$login'";
+            $query_verif = mysqli_query($connexion, $requete_verif);
+            $resultat_verif = mysqli_fetch_assoc($query_verif);
+
+            if (!empty($resultat_verif)) {
+                $erreur_log = true;
+            } else {
+                $update_login = "UPDATE utilisateurs SET login = '$login' WHERE id = '" . $resultat['id'] . "'";
+                $query_login = mysqli_query($connexion, $update_login);
+                $_SESSION['login'] = $login;
+                $modif_log = true;
+            }
+        }
+
+        if (!empty($password))
+        {
+            if ($password == $password_conf) {
+                $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
+                $update_password = "UPDATE utilisateurs SET password = '$password' WHERE id = '" . $resultat['id'] . "'";
+                $query_password = mysqli_query($connexion, $update_password);
+                $modif_password = true;
+            } else {
+                $erreur_password = true;
+            }
+        }
+        
+    } 
+    else {
+        $erreur_oldpassword = true;
+    }
+}
+
+
+$requete = "SELECT * FROM utilisateurs WHERE login = '" . $_SESSION['login'] . "'";
+$query = mysqli_query($connexion, $requete);
+$resultat = mysqli_fetch_assoc($query);
+
+mysqli_close($connexion);
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -46,18 +102,45 @@ $user = mysqli_fetch_assoc($query); //Took 1line from the Db
 
     <main>
 
-        <?php echo'Bonjour ' .$user['login'];?>
 
-        <div class="inscrip">
             
             <form class="ins" action="profil.php" method="POST">
                 <label>Identifiants</label><br/>
-                <input class="login" type="text" name='login' placeholder="<?php echo $user['login']; ?>" required><br/>
-                <label>Mot de passe</label><br/>
-                <input class="password" type="password" name='password' placeholder="<?php echo $user['password']; ?>" required><br/>
+                <input class="login" type="text" name='login' value="<?php echo $user['login']; ?>" required><br/>
+                <label> Mot de passe actuel </label>
+                <input type="password" name="old_password" required />
+                <label> Nouveau mot de passe </label>
+                <input type="password" name="password" />
                 <label>Confirmez la modification</label><br/>
-                <input class="password" type="password" name='confpass' placeholder="<?php echo $user['password']; ?>"required ><br/>
-                <input class="submit" type="submit" name="confirmer" value="Modifier">
+                <input type="password" name="password_conf" />
+                <input class="submit" type="submit" name="Modifier" value="Modifier" />
+
+                <?php
+
+if (isset($_POST['Modifier'])) {
+    if ($erreur_oldpassword == 1) {
+        echo "<span class='warning'>/!\ Mot de passe actuel incorrect ! /!\</span>";
+    } else {
+        if ($erreur_log == 1) {
+            echo "<span class='warning'>Désolée, " . $login . " est déjà pris !</span>";
+        }
+        if ($erreur_password == 1) {
+            echo "<span class='warning'>/!\ Mot de passe différents ! /!\ </span>";
+        }
+        if ($modif_log == 1) {
+            if ($modif_password == 1) {
+                echo "Validation des différentes modifications.";
+            } else {
+                echo "Validation du nouveau Login.";
+            }
+        } elseif ($modif_password == 1) {
+            echo "Validation du nouveau mot de passe. ";
+        }
+    }
+}
+
+
+?>
                 
 
             </form>
@@ -69,24 +152,3 @@ $user = mysqli_fetch_assoc($query); //Took 1line from the Db
 </body>
 </html>
 
-<?php
-
-if(isset($_POST["confirmer"])){
-$login = $_POST['login'];
-$password = $_POST['password'];
-
-if($_POST["password"] != ($_POST["confpass"])){
-    exit('Le mot de passe ne correspond pas');
-}else{
-    $requete2 = "UPDATE utilisateurs SET login='$login', password='$password' WHERE id = '" . $_SESSION['id'] ."' "; // Important to put $ between '' and not " "
-    $query = mysqli_query($db,$requete2);
-    header('location:http://localhost:8888/livre-or/profil/profil.php');
-}
-}
-
-if(isset($_POST['deco'])){
-    session_destroy();
-    header('location:http://localhost:8888/livre-or/index/index.php');
-}
-
-?>

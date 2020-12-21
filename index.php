@@ -1,4 +1,4 @@
-
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -13,27 +13,34 @@
 
 		<header id="header_accueil">
 
-			<ul class="dropdownmenu">
-            	<li id="Acceuil" class="menu_buttons">
-					<a href="index.php">Acceuil</a>	
-				</li>
-				<li>
-					<a href="#">Utilisateurs</a>
-                	<ul>
-                    	<li><a href="inscription.php">inscription</a></li>
-                    	<li><a href="connexion.php">connexion</a></li>
-                    	<li><a href="profil.php">profil</a></li>        
-                	</ul>
-                <li>
-           			<a href="#">livre d'or</a>
-                	<ul>
-                    	<li><a href="livre-or.php">livre d'or</a></li>
-                    	<li><a href="commentaire.php">commentaire</a></li>     
-                	</ul>
-                </li>
-            </ul>
+      <ul class="dropdownmenu">
+        <li id="Acceuil" class="menu_buttons">
+          <a href="index.php">Acceuil</a> 
+        </li>
+        <li>
+          <a href="#">Utilisateurs</a>
+          <ul>
+            <li><a href="inscription.php">inscription</a></li>
+           <?php 
+            if(isset($_SESSION['login']))
+            {
+              echo "<li><a href='deconnexion.php'>deconnexion</a></li>" ;
+            }  
+            else echo  "<li><a href='connexion.php'>connexion</a></li>" ;
+            ?>
+            <li><a href="profil.php">profil</a></li>        
+          </ul>
+        </li>
+        <li>
+          <a href="#">livre d'or</a>
+          <ul>
+            <li><a href="livre-or.php">livre d'or</a></li>
+            <li><a href="commentaire.php">commentaire</a></li>     
+          </ul>
+        </li>
+      </ul>
 
-		</header>
+    </header>
 
 		<main>
 			<div class="presentation">
@@ -136,9 +143,21 @@
 
 
 
-	<footer>
+<!-- 	<footer>
+		<?php if (!isset($_SESSION['login'])) : ?>
 
-	</footer>
+    	<li><a href="inscription.php">Inscription</a></li>
+    	<li><a href="livre-or.php">Livre d'or</a></li>
+   		<li><a href="connexion.php">Connexion</a></li>
+
+		<?php else : ?>
+
+    	<li><a href="profil.php">Profil</a></li>
+    	<li><a href="livre-or.php">Livre d'or</a></li>
+
+		<?php endif; ?>
+
+	</footer> -->
 
 </body>
 </html>

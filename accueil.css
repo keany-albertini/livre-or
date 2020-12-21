@@ -266,6 +266,30 @@ h3{
 
 /*Inscription*/
 
+.com input{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.com button{
+	color: #996a57;
+	margin-bottom: 5px;
+}
+
+.com label{
+	color: #996a57;
+}
+
+.com{
+	
+	border:1px solid #996a57;
+	text-align: center;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	box-shadow: 0 0 20em  #CEB4A9;
+	width: 500px;
+	background-image: url(ressources/livre.png);
+}
 
 .ins input{
 	margin-top: 20px;
@@ -293,4 +317,15 @@ h3{
 	margin-top: 30px;
 	box-shadow: 0 0 20em  #CEB4A9;
 	width: 500px;
+}
+
+
+.error {
+    color: red;
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.img-livre img {
+	border-radius: 20px;
 }

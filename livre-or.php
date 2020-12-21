@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="fr">
   <head>
@@ -19,7 +21,16 @@
           <a href="#">Utilisateurs</a>
           <ul>
             <li><a href="inscription.php">inscription</a></li>
-            <li><a href="connexion.php">connexion</a></li>
+
+            <!-- changement du boutton connexion en deconnexion -->
+           <?php 
+            if(isset($_SESSION['login']))
+            {
+              echo "<li><a href='deconnexion.php'>deconnexion</a></li>" ;
+            }  
+            else echo  "<li><a href='connexion.php'>connexion</a></li>" ;
+            ?>
+
             <li><a href="profil.php">profil</a></li>        
           </ul>
         </li>
@@ -35,43 +46,79 @@
     </header>
 
 
-    <a href=" commentaire.php">Signer le livre d'or</a>
+  
 
-<br /><br />
 
+
+      <main id="main_livreor">
+
+        <?php if (isset($_SESSION['login'])) : ?>
+
+          <section>
+            <article>
+
+              <a href="commentaire.php"><h2>nouveau commentaire</h2></a>
+            </article>
+          </section>
+
+            <section class="commentaire">
+                <article>
 <?php
-$BDD = array();
-$BDD['host'] = "localhost";
-$BDD['user'] = "root";
-$BDD['pass'] = "";
-$BDD['db'] = "livreor";
-$mysqli = mysqli_connect($BDD['host'], $BDD['user'], $BDD['pass'], $BDD['db']);
-if(!$mysqli) {
-    echo "Connexion non établie.";
-    exit;
 
-$sql = 'SELECT id_utilisateur, "date", commentaire FROM commentaires ORDER BY date DESC';
-$req = mysql_query($sql) or die('Erreur SQL !<br />'.$sql.'<br />'.mysql_error());
-
-$nb_signature = mysql_num_rows($req);
-
-if ($nb_signature == 0) {
-    echo 'Aucune signature.';
+  $connexion = mysqli_connect("localhost", "root", "", "livreor");
+  $requete = "SELECT commentaire,date,login FROM commentaires JOIN utilisateurs ON commentaires.id_utilisateur = utilisateurs.id ORDER BY date ASC";
+  $query = mysqli_query($connexion, $requete);
+  $resultat = mysqli_fetch_all($query, MYSQLI_ASSOC);
+  $taille = sizeof($resultat);
+  $k = 0;
+while ($k < $taille) 
+{
+  $date = date('d-m-Y à H:i:s', strtotime($resultat[$k]['date']));
+  $log = "<span class='login'>@".$resultat[$k]['login']."</span>";
+  echo "<h1> Posté le " .$date." par ".$log." :<br></h1><p>".$resultat[$k]['commentaire']."</p>"; 
+  $k = $k + 1;
 }
-else {
-    while ($data = mysql_fetch_array($req)) {
-    sscanf($data['date'], "%4s-%2s-%2s %2s:%2s:%2s", $annee, $mois, $jour, $heure, $minute, $seconde);
-
-    echo ' le ' , $jour , '/' , $mois , '/' , $annee , ' à ' , $heure , ':' , $minute , '<br />';
-    echo nl2br(htmlentities(trim($data['commentaire'])));
-    echo '<br /><br />';
-    }
-}
-// on libère l'espace mémoire alloué pour cette requête
-mysql_free_result ($req);
-// on ferme la connection à la base de données.
-mysql_close ();
+mysqli_close($connexion);
 ?>
+                </article>
+            </section>
+
+<?php else : ?>
+
+            <section id="noconnect" class="commentaire">
+                <article>
+                    <?php
+
+$connexion = mysqli_connect("localhost", "root", "", "livreor");
+$requete = "SELECT commentaire,date,login FROM commentaires JOIN utilisateurs ON commentaires.id_utilisateur = utilisateurs.id ORDER BY date ASC";
+$query = mysqli_query($connexion, $requete);
+$resultat = mysqli_fetch_all($query, MYSQLI_ASSOC);
+
+$taille = sizeof($resultat);
+
+$k = 0;
+while ($k < $taille) 
+{
+    $date = date('d-m-Y à H:i:s', strtotime($resultat[$k]['date']));
+    $log = "<span class='login'>@".$resultat[$k]['login']."</span>";
+    echo "<h1> Posté le " .$date." par ".$log." :<br></h1><p>".$resultat[$k]['commentaire']."</p>"; 
+    $k = $k + 1;
+}
+
+mysqli_close($connexion);
+
+?>
+                </article>
+            </section>
+
+        <?php endif; ?>
+
+    </main>
+
+
+
+
+
     <footer>
 
     </footer>
@@ -79,5 +126,4 @@ mysql_close ();
 </body>
 </html>
  <?php
-}
 ?>
